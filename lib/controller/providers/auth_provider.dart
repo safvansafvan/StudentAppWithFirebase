@@ -67,7 +67,7 @@ class AuthProvider extends ChangeNotifier {
           PhoneAuthProvider.credential(verificationId: verifyId, smsCode: code);
       await auth
           .signInWithCredential(credential)
-          .then((value) => Navigator.push(
+          .then((value) => Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => const HomeView(),

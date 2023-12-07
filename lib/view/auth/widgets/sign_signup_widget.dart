@@ -48,7 +48,9 @@ class SignInAndSignUpView extends StatelessWidget {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 60, vertical: 20),
             child: ElevatedButton(
-                onPressed: () async {},
+                onPressed: () async {
+                  await handleButtonClicks(value, context);
+                },
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(500, 40),
                   backgroundColor: value.isSignUp ? Colors.blue : commonClr,
@@ -107,7 +109,7 @@ class SignInAndSignUpView extends StatelessWidget {
               value.emailCtrl.text.trim(), value.passwordCtrl.text.trim());
           if (value.user != null) {
             // ignore: use_build_context_synchronously
-            Navigator.push(
+            Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const HomeView(),
@@ -120,7 +122,7 @@ class SignInAndSignUpView extends StatelessWidget {
               value.emailCtrl.text.trim(), value.passwordCtrl.text.trim());
           if (value.user != null) {
             // ignore: use_build_context_synchronously
-            Navigator.push(
+            Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const HomeView(),
