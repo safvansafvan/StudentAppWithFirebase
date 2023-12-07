@@ -61,7 +61,7 @@ class PhoneAuthView extends StatelessWidget {
   Future<void> handlePhoneAuth(context) async {
     final authP = Provider.of<AuthProvider>(context, listen: false);
     final ip = Provider.of<InternetProvider>(context, listen: false);
-    ip.checkConnection();
+    await ip.checkConnection();
     if (ip.hasInternet == false) {
       showMsgToast(msg: 'Enable Internet Connection');
     } else if (authP.phoneNumberCtrl.length < 10) {

@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studentappfirebase/controller/providers/auth_provider.dart';
 import 'package:studentappfirebase/controller/providers/internet_provider.dart';
-import 'package:studentappfirebase/view/auth/authview.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +16,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthProvider provider = AuthProvider();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
-        home: AuthView(),
+        home: provider.handleScreens(context),
       ),
     );
   }

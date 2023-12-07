@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:studentappfirebase/controller/const.dart';
 import 'package:studentappfirebase/controller/providers/auth_provider.dart';
+import 'package:studentappfirebase/controller/providers/internet_provider.dart';
 import 'package:studentappfirebase/view/auth/phone_auth/phone_auth_view.dart';
 import 'package:studentappfirebase/view/auth/widgets/text_field_common.dart';
 import 'package:provider/provider.dart';
+import 'package:studentappfirebase/view/widgets/msg_toast.dart';
 
 // ignore: must_be_immutable
 class AuthView extends StatelessWidget {
@@ -107,16 +109,23 @@ class AuthView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundColor: authClr,
-                child: const Image(
-                    image: AssetImage(
-                  'assets/icons/google.png',
-                )),
+              InkWell(
+                onTap: () async {
+                  await handleGoogleSignIn(context);
+                },
+                hoverColor: commonClr,
+                child: CircleAvatar(
+                  radius: 30,
+                  backgroundColor: authClr,
+                  child: const Image(
+                      image: AssetImage(
+                    'assets/icons/google.png',
+                  )),
+                ),
               ),
               commonWidth,
               InkWell(
+                hoverColor: commonClr,
                 onTap: () {
                   Navigator.push(
                       context,
@@ -125,16 +134,29 @@ class AuthView extends StatelessWidget {
                       ));
                 },
                 child: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: authClr,
-                    child: const Image(
-                        width: 30,
-                        image: AssetImage('assets/icons/phone.png'))),
+                  radius: 30,
+                  backgroundColor: authClr,
+                  child: const Image(
+                    width: 30,
+                    image: AssetImage('assets/icons/phone.png'),
+                  ),
+                ),
               )
             ],
           )
         ],
       ),
     );
+  }
+
+  Future<void> handleGoogleSignIn(context) async {
+    final authP = Provider.of<AuthProvider>(context, listen: false);
+    final ip = Provider.of<InternetProvider>(context, listen: false);
+    await ip.checkConnection();
+    if (ip.hasInternet == false) {
+      showMsgToast(msg: 'Enable Internet Connection');
+    } else {
+      await authP.signInWithGoogle(context: context);
+    }
   }
 }
