@@ -51,7 +51,8 @@ class PhoneOtpView extends StatelessWidget {
                 ),
               ),
             ),
-            const LottieView(path: 'assets/animations/otp.json'),
+            const LottieView(
+                path: 'assets/animations/otp.json', height: 200, width: 200),
             commonHeight,
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),

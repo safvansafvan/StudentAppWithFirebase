@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:studentappfirebase/controller/const.dart';
 import 'package:studentappfirebase/controller/providers/auth_provider.dart';
 import 'package:studentappfirebase/controller/providers/internet_provider.dart';
+import 'package:studentappfirebase/view/auth/forgot_password/forgot_password.dart';
 import 'package:studentappfirebase/view/auth/widgets/text_field_common.dart';
 import 'package:studentappfirebase/view/home/home.dart';
 import 'package:studentappfirebase/view/widgets/msg_toast.dart';
@@ -32,7 +33,13 @@ class SignInAndSignUpView extends StatelessWidget {
             child: Container(
               margin: const EdgeInsetsDirectional.only(end: 10),
               child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ForgotPasswordView(),
+                        ));
+                  },
                   child: Text(
                     value.isSignUp ? '' : 'Forgot Password ?',
                     style: const TextStyle(fontWeight: FontWeight.normal),

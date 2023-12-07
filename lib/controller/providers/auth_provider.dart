@@ -159,4 +159,26 @@ class AuthProvider extends ChangeNotifier {
     }
     return null;
   }
+
+  //forgot password ************************************************************************************
+
+  TextEditingController forgotPasswordCtrl = TextEditingController();
+  bool isForgotLoading = false;
+  Future<void> forgotPassword(context) async {
+    isForgotLoading = true;
+    notifyListeners();
+    try {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: forgotPasswordCtrl.text.trim())
+          .then((value) {
+        Navigator.pop(context);
+        forgotPasswordCtrl.clear();
+        showMsgToast(msg: 'Check Email Inbox');
+      });
+    } catch (e) {
+      log(e.toString());
+    }
+    isForgotLoading = true;
+    notifyListeners();
+  }
 }
