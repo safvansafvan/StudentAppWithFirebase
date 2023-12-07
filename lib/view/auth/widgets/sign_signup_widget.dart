@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studentappfirebase/controller/const.dart';
@@ -112,7 +111,7 @@ class SignInAndSignUpView extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const HomeView(),
-                ));
+                )).then((v) => value.clearController());
           } else {
             log('something went wrong');
           }
@@ -125,7 +124,7 @@ class SignInAndSignUpView extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const HomeView(),
-                ));
+                )).then((v) => value.clearController());
           } else {
             log('something went wrong');
           }

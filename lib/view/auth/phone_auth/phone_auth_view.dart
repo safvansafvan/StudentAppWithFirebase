@@ -37,7 +37,7 @@ class PhoneAuthView extends StatelessWidget {
             ),
           ),
           const LottieView(
-              path: 'assets/animations/lock.json', height: 200, width: 200),
+              path: 'assets/animations/lock.json', height: 250, width: 200),
           const HeaderView(),
           Form(
             key: globelKey,
