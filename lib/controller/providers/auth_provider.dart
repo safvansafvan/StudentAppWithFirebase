@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -11,6 +10,12 @@ import 'package:studentappfirebase/view/widgets/msg_toast.dart';
 class AuthProvider extends ChangeNotifier {
   TextEditingController emailCtrl = TextEditingController();
   TextEditingController passwordCtrl = TextEditingController();
+
+  bool isSignUp = false;
+  void updateFields(bool v) {
+    isSignUp = v;
+    notifyListeners();
+  }
 
 // phone auth view *******************************************************************************
   String countryCode = '+91';
@@ -44,10 +49,8 @@ class AuthProvider extends ChangeNotifier {
   // phoneotp authentication view  ********************************************************************
 
   final TextEditingController otpController = TextEditingController();
-
+  FirebaseAuth auth = FirebaseAuth.instance;
   Future<void> handlePhoneOtpVerification(context) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-
     String code = otpController.text;
     log(verifyId);
     log(code);
@@ -70,11 +73,12 @@ class AuthProvider extends ChangeNotifier {
   void clearController() {
     phoneNumberCtrl.clear();
     otpController.clear();
+    passwordCtrl.clear();
+    emailCtrl.clear();
   }
 
 // handle continue with google  *********************************************************************
   User? user;
-  final FirebaseAuth auth = FirebaseAuth.instance;
   Future<User?> signInWithGoogle({required BuildContext context}) async {
     User? user;
     final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -108,10 +112,11 @@ class AuthProvider extends ChangeNotifier {
     if (user != null) {
       return const HomeView();
     } else {
-      return AuthView();
+      return const AuthView();
     }
   }
 
+// logout
   Future<void> logout(context) async {
     try {
       await FirebaseAuth.instance.signOut();
@@ -120,7 +125,7 @@ class AuthProvider extends ChangeNotifier {
       await googleSignIn.signOut();
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => AuthView()),
+        MaterialPageRoute(builder: (context) => const AuthView()),
         (route) => false,
       );
       showMsgToast(msg: 'Logout');
@@ -129,4 +134,29 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  /// singup with email and password ************************************************************
+  Future<User?> signUpWithEmailAndPassword(
+      String email, String password) async {
+    try {
+      UserCredential credential = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      return credential.user;
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
+
+//signin with email and password ***************************************************************
+  Future<User?> signInWithEmailAndPasswords(
+      String email, String password) async {
+    try {
+      UserCredential credential = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      return credential.user;
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
 }

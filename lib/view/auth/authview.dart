@@ -3,15 +3,14 @@ import 'package:studentappfirebase/controller/const.dart';
 import 'package:studentappfirebase/controller/providers/auth_provider.dart';
 import 'package:studentappfirebase/controller/providers/internet_provider.dart';
 import 'package:studentappfirebase/view/auth/phone_auth/phone_auth_view.dart';
-import 'package:studentappfirebase/view/auth/widgets/text_field_common.dart';
+import 'package:studentappfirebase/view/auth/widgets/sign_signup_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:studentappfirebase/view/widgets/msg_toast.dart';
 
 // ignore: must_be_immutable
 class AuthView extends StatelessWidget {
-  AuthView({super.key});
+  const AuthView({super.key});
 
-  GlobalKey<FormState> globelKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final authP = Provider.of<AuthProvider>(context, listen: false);
@@ -29,64 +28,7 @@ class AuthView extends StatelessWidget {
             ),
           ),
           commonHeight,
-          Form(
-            key: globelKey,
-            child: Column(
-              children: [
-                TextFormFieldCommon(
-                    controller: authP.emailCtrl,
-                    hintText: 'Email',
-                    keyType: TextInputType.emailAddress),
-                TextFormFieldCommon(
-                    controller: authP.passwordCtrl,
-                    hintText: 'Password',
-                    keyType: TextInputType.emailAddress),
-              ],
-            ),
-          ),
-          Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              margin: const EdgeInsetsDirectional.only(end: 10),
-              child: TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Forgot Password ?',
-                    style: TextStyle(fontWeight: FontWeight.normal),
-                  )),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 60, vertical: 20),
-            child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: commonClr,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                ),
-                child: Text(
-                  'Sign in',
-                  style: TextStyle(color: kwhite),
-                )),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Don't have an account?",
-                style: TextStyle(
-                    fontSize: 13, color: kgrey, fontWeight: FontWeight.normal),
-              ),
-              TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Sign Up',
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  ))
-            ],
-          ),
+          SignInAndSignUpView(authP: authP),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Row(
