@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studentappfirebase/controller/providers/auth_provider.dart';
+import 'package:studentappfirebase/controller/providers/db_provider.dart';
 import 'package:studentappfirebase/controller/providers/internet_provider.dart';
+import 'package:studentappfirebase/view/add_student/add_student.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +22,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
-        ChangeNotifierProvider(create: (context) => InternetProvider())
+        ChangeNotifierProvider(create: (context) => InternetProvider()),
+        ChangeNotifierProvider(create: (context) => DbProvider())
       ],
       child: MaterialApp(
         title: 'studentapp',
@@ -31,6 +34,9 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         home: provider.handleScreens(context),
+        routes: {
+          'addView': (context) => const AddStudentView(),
+        },
       ),
     );
   }

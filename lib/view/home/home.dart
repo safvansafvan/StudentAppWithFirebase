@@ -48,7 +48,9 @@ class HomeView extends StatelessWidget {
           elevation: 5,
           icon: Icon(Icons.add, color: kwhite),
           backgroundColor: commonClr,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, 'addView');
+          },
           label: Text(
             ' Add Student',
             style: TextStyle(color: kwhite),
