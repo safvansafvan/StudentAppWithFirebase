@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studentappfirebase/controller/providers/auth_provider.dart';
+import 'package:studentappfirebase/controller/providers/internet_provider.dart';
 import 'package:studentappfirebase/view/auth/authview.dart';
 
 void main() async {
@@ -17,7 +18,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => AuthProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => InternetController())
+      ],
       child: MaterialApp(
         title: 'studentapp',
         theme: ThemeData(
