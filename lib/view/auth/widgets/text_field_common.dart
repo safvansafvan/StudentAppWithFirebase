@@ -3,20 +3,16 @@ import 'package:studentappfirebase/controller/const.dart';
 
 // ignore: must_be_immutable
 class TextFormFieldCommon extends StatelessWidget {
-  TextFormFieldCommon(
-      {super.key,
-      required this.controller,
-      required this.hintText,
-      required this.keyType,
-      this.prefixIcon,
-      this.maxlength,
-      this.suffixIcon});
+  TextFormFieldCommon({
+    super.key,
+    required this.controller,
+    required this.hintText,
+    required this.keyType,
+  });
 
   final String hintText;
   final TextInputType keyType;
-  final dynamic prefixIcon;
-  final dynamic suffixIcon;
-  final dynamic maxlength;
+
   TextEditingController controller;
   @override
   Widget build(BuildContext context) {
@@ -26,7 +22,6 @@ class TextFormFieldCommon extends StatelessWidget {
       decoration: BoxDecoration(color: kwhite, borderRadius: radiusFive),
       child: TextFormField(
         controller: controller,
-        maxLength: maxlength,
         keyboardType: keyType,
         validator: (value) {
           if (value!.isEmpty) {
@@ -37,9 +32,7 @@ class TextFormFieldCommon extends StatelessWidget {
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.only(left: 10),
             prefixIconColor: kblack,
-            prefixIcon: prefixIcon,
             suffixIconColor: kblack,
-            suffixIcon: suffixIcon,
             hintText: hintText,
             border: border,
             enabledBorder: InputBorder.none,

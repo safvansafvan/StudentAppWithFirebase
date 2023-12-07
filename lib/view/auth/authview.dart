@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:studentappfirebase/controller/const.dart';
 import 'package:studentappfirebase/controller/providers/auth_provider.dart';
+import 'package:studentappfirebase/view/auth/phone_auth/phone_auth_view.dart';
 import 'package:studentappfirebase/view/auth/widgets/text_field_common.dart';
 import 'package:provider/provider.dart';
 
@@ -115,11 +116,21 @@ class AuthView extends StatelessWidget {
                 )),
               ),
               commonWidth,
-              CircleAvatar(
-                  radius: 30,
-                  backgroundColor: authClr,
-                  child: const Image(
-                      width: 30, image: AssetImage('assets/icons/phone.png')))
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PhoneAuthView(),
+                      ));
+                },
+                child: CircleAvatar(
+                    radius: 30,
+                    backgroundColor: authClr,
+                    child: const Image(
+                        width: 30,
+                        image: AssetImage('assets/icons/phone.png'))),
+              )
             ],
           )
         ],

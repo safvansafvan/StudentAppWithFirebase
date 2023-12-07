@@ -18,6 +18,8 @@ dependencies:
   provider: ^6.1.1
   google_fonts: ^6.1.0
   connectivity_plus: ^5.0.2
+  pinput: ^3.0.1
+  lottie: ^2.7.0
 
 
 dev_dependencies:
@@ -29,6 +31,7 @@ flutter:
 
   assets:
     - assets/icons/
+    - assets/animations/
 
   # example:
   # fonts:
