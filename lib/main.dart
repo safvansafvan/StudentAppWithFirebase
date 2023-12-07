@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:studentappfirebase/controller/providers/auth_provider.dart';
 import 'package:studentappfirebase/view/auth/authview.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'studentapp',
         theme: ThemeData(
+          fontFamily: GoogleFonts.openSans().fontFamily,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
           useMaterial3: true,
         ),

@@ -10,7 +10,7 @@ var authClr = const Color.fromARGB(235, 255, 255, 255);
 
 //size
 
-var commonWidth = const SizedBox(width: 10);
+var commonWidth = const SizedBox(width: 30);
 var commonHeight = const SizedBox(height: 10);
 
 //radius

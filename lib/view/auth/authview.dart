@@ -17,7 +17,7 @@ class AuthView extends StatelessWidget {
       body: ListView(
         children: [
           const Padding(
-            padding: EdgeInsets.symmetric(vertical: 40),
+            padding: EdgeInsets.symmetric(vertical: 50),
             child: Text(
               'Hello!\nWelcome back',
               style: TextStyle(
@@ -40,6 +40,87 @@ class AuthView extends StatelessWidget {
                     keyType: TextInputType.emailAddress),
               ],
             ),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              margin: const EdgeInsetsDirectional.only(end: 10),
+              child: TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'Forgot Password ?',
+                    style: TextStyle(fontWeight: FontWeight.normal),
+                  )),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 60, vertical: 20),
+            child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: commonClr,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+                child: Text(
+                  'Sign in',
+                  style: TextStyle(color: kwhite),
+                )),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Don't have an account?",
+                style: TextStyle(
+                    fontSize: 13, color: kgrey, fontWeight: FontWeight.normal),
+              ),
+              TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'Sign Up',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ))
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Divider(color: kgrey),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    'Or Continue With',
+                    style: TextStyle(color: kgrey),
+                  ),
+                ),
+                Expanded(child: Divider(color: kgrey))
+              ],
+            ),
+          ),
+          commonHeight,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 30,
+                backgroundColor: authClr,
+                child: const Image(
+                    image: AssetImage(
+                  'assets/icons/google.png',
+                )),
+              ),
+              commonWidth,
+              CircleAvatar(
+                  radius: 30,
+                  backgroundColor: authClr,
+                  child: const Image(
+                      width: 30, image: AssetImage('assets/icons/phone.png')))
+            ],
           )
         ],
       ),
