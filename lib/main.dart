@@ -6,12 +6,16 @@ import 'package:provider/provider.dart';
 import 'package:studentappfirebase/controller/providers/auth_provider.dart';
 import 'package:studentappfirebase/controller/providers/db_provider.dart';
 import 'package:studentappfirebase/controller/providers/internet_provider.dart';
+import 'package:studentappfirebase/model/student_model.dart';
 import 'package:studentappfirebase/view/add_student/add_student.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Hive.initFlutter();
+  if (!Hive.isAdapterRegistered(StudentModelAdapter().typeId)) {
+    Hive.registerAdapter(StudentModelAdapter());
+  }
   runApp(const MyApp());
 }
 

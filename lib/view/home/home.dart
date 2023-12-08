@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:studentappfirebase/controller/const.dart';
+import 'package:studentappfirebase/view/list_student/list_student.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -7,6 +8,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: authClr,
       appBar: AppBar(
         backgroundColor: commonClr,
         leading: IconButton(
@@ -35,9 +37,7 @@ class HomeView extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView(
-        children: [],
-      ),
+      body: const StudentListView(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: SizedBox(
         height: 45,

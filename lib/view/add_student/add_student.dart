@@ -94,7 +94,7 @@ class AddStudentView extends StatelessWidget {
         age.isEmpty ||
         rollNo.isEmpty ||
         db.fileImg!.path.isEmpty) {
-      showMsgToast(msg: 'Empty Field');
+      return showMsgToast(msg: 'Empty Field');
     } else {
       final student = StudentModel(
         name: name,
@@ -103,7 +103,8 @@ class AddStudentView extends StatelessWidget {
         photo: db.fileImg!.path,
       );
       await db.addStudent(student);
-      showMsgToast(msg: '$name is added}');
+      db.clearController();
+      showMsgToast(msg: '$name is added', bg: commonClr);
     }
   }
 }
