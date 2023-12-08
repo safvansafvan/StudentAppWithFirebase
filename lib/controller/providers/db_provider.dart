@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:studentappfirebase/model/student_model.dart';
 
 class DbProvider extends ChangeNotifier {
@@ -10,8 +13,8 @@ class DbProvider extends ChangeNotifier {
   List<StudentModel> studentList = [];
   List<StudentModel> stillSearchUser = [];
 
-  Future<void> addStudent(values) async {
-    final studentsDB = await Hive.openBox<StudentModel>('students_db');
+  Future<void> addStudent(StudentModel values) async {
+    final studentsDB = await Hive.openBox<StudentModel>('st_db');
     await studentsDB.add(values);
     studentList.add(values);
     getAllStudents();
@@ -19,7 +22,7 @@ class DbProvider extends ChangeNotifier {
   }
 
   Future<void> getAllStudents() async {
-    final studentsDB = await Hive.openBox<StudentModel>('students_db');
+    final studentsDB = await Hive.openBox<StudentModel>('st_db');
     studentList.clear();
     studentList.addAll(studentsDB.values);
     stillSearchUser = studentList;
@@ -27,14 +30,14 @@ class DbProvider extends ChangeNotifier {
   }
 
   Future<void> editdetails(int index, StudentModel student) async {
-    final studentDB = await Hive.openBox<StudentModel>('students_db');
+    final studentDB = await Hive.openBox<StudentModel>('st_db');
     studentDB.putAt(index, student);
     getAllStudents();
     notifyListeners();
   }
 
   Future<void> deletest(int index) async {
-    final studentDB = await Hive.openBox<StudentModel>('students_db');
+    final studentDB = await Hive.openBox<StudentModel>('st_db');
     studentDB.deleteAt(index);
     getAllStudents();
     notifyListeners();
@@ -52,6 +55,36 @@ class DbProvider extends ChangeNotifier {
           .toList();
     }
     stillSearchUser = result;
+    notifyListeners();
+  }
+
+  void clearController() {
+    nameCtrl.clear();
+    ageCtrl.clear();
+    rollNumCtrl.clear();
+    fileImg = null;
+  }
+
+  File? fileImg;
+  Future<void> getImageFromGallery() async {
+    final photo = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (photo == null) {
+      return;
+    } else {
+      final photoTemp = File(photo.path);
+      fileImg = photoTemp;
+    }
+    notifyListeners();
+  }
+
+  Future<void> getImageFromCamera() async {
+    final photo = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (photo == null) {
+      return;
+    } else {
+      final photoTemp = File(photo.path);
+      fileImg = photoTemp;
+    }
     notifyListeners();
   }
 }
