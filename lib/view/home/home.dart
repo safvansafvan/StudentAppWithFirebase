@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:studentappfirebase/controller/const.dart';
+import 'package:studentappfirebase/controller/providers/auth_provider.dart';
 import 'package:studentappfirebase/view/list_student/list_student.dart';
 
 class HomeView extends StatelessWidget {
@@ -12,12 +14,14 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: commonClr,
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              await Provider.of<AuthProvider>(context, listen: false)
+                  .logout(context);
+            },
             icon: Icon(
-              Icons.menu,
+              Icons.logout,
               color: kwhite,
             )),
-
         title: Text(
           'Studnet List',
           style: TextStyle(
@@ -30,25 +34,6 @@ class HomeView extends StatelessWidget {
               },
               icon: Icon(Icons.search, color: kwhite))
         ],
-        // title: Container(
-        //   margin: const EdgeInsets.symmetric(vertical: 10),
-        //   decoration: BoxDecoration(
-        //       color: kwhite, borderRadius: BorderRadius.circular(10)),
-        //   child: Center(
-        //     child: TextField(
-        //       // controller: provider.search,
-        //       onChanged: (value) {},
-        //       decoration: InputDecoration(
-        //         hintText: 'Search...',
-        //         prefixIcon: const Icon(Icons.search),
-        //         suffixIcon:
-        //             IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
-        //         focusedBorder: InputBorder.none,
-        //         enabledBorder: InputBorder.none,
-        //       ),
-        //     ),
-        //   ),
-        // ),
       ),
       body: const StudentListView(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

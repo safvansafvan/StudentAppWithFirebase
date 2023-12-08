@@ -15,6 +15,7 @@ class SearchView extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<DbProvider>(context, listen: false);
     return Scaffold(
+      backgroundColor: authClr,
       appBar: AppBar(
         backgroundColor: commonClr,
         leading: IconButton(
