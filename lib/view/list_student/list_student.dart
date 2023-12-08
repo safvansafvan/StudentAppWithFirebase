@@ -6,6 +6,7 @@ import 'package:studentappfirebase/controller/const.dart';
 import 'package:studentappfirebase/controller/providers/db_provider.dart';
 import 'package:studentappfirebase/view/edit_student/edit_student.dart';
 import 'package:studentappfirebase/view/widgets/lottie_view.dart';
+import 'package:studentappfirebase/view/widgets/msg_toast.dart';
 
 class StudentListView extends StatelessWidget {
   const StudentListView({super.key});
@@ -17,10 +18,16 @@ class StudentListView extends StatelessWidget {
         value.getAllStudents();
         if (value.studentList.isEmpty) {
           return const Center(
-              child: LottieView(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              LottieView(
                   path: 'assets/animations/empty.json',
-                  height: 100,
-                  width: 100));
+                  height: 150,
+                  width: 150),
+              Text('Tap + Add one')
+            ],
+          ));
         } else {
           return Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -46,8 +53,9 @@ class StudentListView extends StatelessWidget {
                         backgroundColor: authClr,
                       ),
                       SlidableAction(
-                        onPressed: (context) {
-                          value.deleteStudent(index);
+                        onPressed: (context) async {
+                          await value.deleteStudent(index);
+                          showMsgToast(msg: 'Deleted', bg: commonClr);
                         },
                         icon: Icons.delete_outline,
                         foregroundColor: Colors.red,
@@ -67,7 +75,7 @@ class StudentListView extends StatelessWidget {
                             title: Text(student.name.toUpperCase(),
                                 style: const TextStyle(fontSize: 15)),
                             leading: CircleAvatar(
-                              backgroundImage: FileImage(File(student.photo)),
+                              backgroundImage: FileImage(File(student.photo!)),
                               radius: 25,
                             ),
                             trailing: IconButton(

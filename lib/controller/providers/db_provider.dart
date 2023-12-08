@@ -10,10 +10,7 @@ class DbProvider extends ChangeNotifier {
   TextEditingController ageCtrl = TextEditingController();
   TextEditingController rollNumCtrl = TextEditingController();
 
-  //edit
-  TextEditingController nameEditCtrl = TextEditingController();
-  TextEditingController ageEditCtrl = TextEditingController();
-  TextEditingController rollEditCtrl = TextEditingController();
+  TextEditingController searchCtrl = TextEditingController();
 
   List<StudentModel> studentList = [];
   List<StudentModel> stillSearchUser = [];
@@ -30,7 +27,6 @@ class DbProvider extends ChangeNotifier {
     final studentsDB = await Hive.openBox<StudentModel>('st_db');
     studentList.clear();
     studentList.addAll(studentsDB.values);
-    stillSearchUser = studentList;
     notifyListeners();
   }
 
@@ -48,15 +44,18 @@ class DbProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> searchStudent(String text) async {
+  Future<void> searchStudent(query) async {
     List<StudentModel> result = [];
-    if (text.isEmpty) {
+    if (query.isEmpty) {
       result = studentList;
       notifyListeners();
     } else {
       result = studentList
-          .where((element) =>
-              element.name.toLowerCase().contains(text.toLowerCase()))
+          .where((element) => element.name
+              .toString()
+              .toLowerCase()
+              .trim()
+              .startsWith(query.toLowerCase().trim()))
           .toList();
     }
     stillSearchUser = result;

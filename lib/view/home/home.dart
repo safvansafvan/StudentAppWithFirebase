@@ -17,25 +17,38 @@ class HomeView extends StatelessWidget {
               Icons.menu,
               color: kwhite,
             )),
-        title: Container(
-          margin: const EdgeInsets.symmetric(vertical: 10),
-          decoration: BoxDecoration(
-              color: kwhite, borderRadius: BorderRadius.circular(10)),
-          child: Center(
-            child: TextField(
-              // controller: provider.search,
-              onChanged: (value) {},
-              decoration: InputDecoration(
-                hintText: 'Search...',
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon:
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-              ),
-            ),
-          ),
+
+        title: Text(
+          'Studnet List',
+          style: TextStyle(
+              fontSize: 18, fontWeight: FontWeight.w500, color: kwhite),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'searchView');
+              },
+              icon: Icon(Icons.search, color: kwhite))
+        ],
+        // title: Container(
+        //   margin: const EdgeInsets.symmetric(vertical: 10),
+        //   decoration: BoxDecoration(
+        //       color: kwhite, borderRadius: BorderRadius.circular(10)),
+        //   child: Center(
+        //     child: TextField(
+        //       // controller: provider.search,
+        //       onChanged: (value) {},
+        //       decoration: InputDecoration(
+        //         hintText: 'Search...',
+        //         prefixIcon: const Icon(Icons.search),
+        //         suffixIcon:
+        //             IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
+        //         focusedBorder: InputBorder.none,
+        //         enabledBorder: InputBorder.none,
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ),
       body: const StudentListView(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

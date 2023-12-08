@@ -1,26 +1,29 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studentappfirebase/controller/const.dart';
 import 'package:studentappfirebase/controller/providers/db_provider.dart';
 import 'package:studentappfirebase/model/student_model.dart';
-import 'package:studentappfirebase/view/add_student/img_access_dialog.dart';
 import 'package:studentappfirebase/view/widgets/msg_toast.dart';
 import 'package:studentappfirebase/view/widgets/text_form_view.dart';
 
+// ignore: must_be_immutable
 class EditStudentView extends StatelessWidget {
-  const EditStudentView(
-      {super.key, required this.stModel, required this.index});
+  EditStudentView({super.key, required this.stModel, required this.index});
   final StudentModel stModel;
   final int index;
+
+  TextEditingController nameEditCtrl = TextEditingController();
+  TextEditingController ageEditCtrl = TextEditingController();
+  TextEditingController rollEditCtrl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    nameEditCtrl.text = stModel.name;
+    ageEditCtrl.text = stModel.age;
+    rollEditCtrl.text = stModel.rollnumber;
     return Scaffold(
       body: SingleChildScrollView(
         child: Consumer<DbProvider>(builder: (context, value, _) {
-          value.nameEditCtrl = TextEditingController(text: stModel.name);
-          value.ageEditCtrl = TextEditingController(text: stModel.name);
-          value.rollEditCtrl = TextEditingController(text: stModel.name);
           return ListView(
             shrinkWrap: true,
             children: [
@@ -35,37 +38,20 @@ class EditStudentView extends StatelessWidget {
                       color: commonClr),
                 ),
               ),
-              Consumer<DbProvider>(builder: (context, provider, _) {
-                return CircleAvatar(
-                  backgroundColor: commonClr,
-                  backgroundImage:
-                      FileImage(File(value.fileImg?.path ?? stModel.photo)),
-                  radius: 60,
-                  child: IconButton(
-                    onPressed: () async {
-                      await dialogWidget(context, provider);
-                    },
-                    icon: Icon(
-                      provider.fileImg == null
-                          ? Icons.add_photo_alternate
-                          : Icons.restore,
-                      size: 40,
-                      color: kwhite,
-                    ),
-                  ),
-                );
-              }),
               commonHeight,
-              TextFormView(
-                  controller: value.nameEditCtrl,
-                  hintText: "Name",
-                  isNum: false),
-              TextFormView(
-                  controller: value.ageEditCtrl, hintText: "Age", isNum: true),
-              TextFormView(
-                  controller: value.rollEditCtrl,
-                  hintText: "Roll No",
-                  isNum: true),
+              Form(
+                  child: Column(
+                children: [
+                  TextFormView(
+                      controller: nameEditCtrl, hintText: "Name", isNum: false),
+                  TextFormView(
+                      controller: ageEditCtrl, hintText: "Age", isNum: true),
+                  TextFormView(
+                      controller: rollEditCtrl,
+                      hintText: "Roll No",
+                      isNum: true),
+                ],
+              )),
               Container(
                 margin:
                     const EdgeInsets.symmetric(horizontal: 60, vertical: 20),
@@ -93,21 +79,17 @@ class EditStudentView extends StatelessWidget {
 
   Future<void> handleEditStudent(context, index) async {
     final db = Provider.of<DbProvider>(context, listen: false);
-    final name = db.nameEditCtrl.text.trim();
-    final age = db.ageEditCtrl.text.trim();
-    final rollNo = db.rollEditCtrl.text.trim();
+    final name = nameEditCtrl.text.trim();
+    final age = ageEditCtrl.text.trim();
+    final rollNo = rollEditCtrl.text.trim();
 
-    if (name.isEmpty ||
-        age.isEmpty ||
-        rollNo.isEmpty ||
-        db.fileImg!.path.isEmpty) {
+    if (name.isEmpty || age.isEmpty || rollNo.isEmpty) {
       return showMsgToast(msg: 'Empty Field');
     } else {
       final student = StudentModel(
         name: name,
         age: age,
         rollnumber: rollNo,
-        photo: db.fileImg!.path,
       );
       await db.editStudents(index, student);
       db.clearController();
