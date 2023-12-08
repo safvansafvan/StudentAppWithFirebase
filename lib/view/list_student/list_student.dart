@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:studentappfirebase/controller/const.dart';
 import 'package:studentappfirebase/controller/providers/db_provider.dart';
+import 'package:studentappfirebase/view/edit_student/edit_student.dart';
 import 'package:studentappfirebase/view/widgets/lottie_view.dart';
 
 class StudentListView extends StatelessWidget {
@@ -12,7 +13,7 @@ class StudentListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<DbProvider>(
-      builder: (context, value, child) {
+      builder: (context, value, _) {
         value.getAllStudents();
         if (value.studentList.isEmpty) {
           return const Center(
@@ -31,13 +32,23 @@ class StudentListView extends StatelessWidget {
                     endActionPane:
                         ActionPane(motion: const BehindMotion(), children: [
                       SlidableAction(
-                        onPressed: (context) {},
+                        onPressed: (context) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditStudentView(
+                                  stModel: student, index: index),
+                            ),
+                          );
+                        },
                         icon: Icons.edit,
                         foregroundColor: Colors.blue,
                         backgroundColor: authClr,
                       ),
                       SlidableAction(
-                        onPressed: (context) {},
+                        onPressed: (context) {
+                          value.deleteStudent(index);
+                        },
                         icon: Icons.delete_outline,
                         foregroundColor: Colors.red,
                         backgroundColor: authClr,

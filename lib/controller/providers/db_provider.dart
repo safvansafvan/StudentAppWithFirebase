@@ -10,6 +10,11 @@ class DbProvider extends ChangeNotifier {
   TextEditingController ageCtrl = TextEditingController();
   TextEditingController rollNumCtrl = TextEditingController();
 
+  //edit
+  TextEditingController nameEditCtrl = TextEditingController();
+  TextEditingController ageEditCtrl = TextEditingController();
+  TextEditingController rollEditCtrl = TextEditingController();
+
   List<StudentModel> studentList = [];
   List<StudentModel> stillSearchUser = [];
 
@@ -29,14 +34,14 @@ class DbProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> editdetails(int index, StudentModel student) async {
+  Future<void> editStudents(int index, StudentModel student) async {
     final studentDB = await Hive.openBox<StudentModel>('st_db');
     studentDB.putAt(index, student);
     getAllStudents();
     notifyListeners();
   }
 
-  Future<void> deletest(int index) async {
+  Future<void> deleteStudent(int index) async {
     final studentDB = await Hive.openBox<StudentModel>('st_db');
     studentDB.deleteAt(index);
     getAllStudents();

@@ -21,7 +21,7 @@ class AddStudentView extends StatelessWidget {
             alignment: Alignment.center,
             margin: const EdgeInsets.symmetric(vertical: 50),
             child: const Text(
-              'Enter User Details',
+              'Enter Student Details',
               style: TextStyle(
                   fontWeight: FontWeight.bold, fontSize: 20, color: commonClr),
             ),
