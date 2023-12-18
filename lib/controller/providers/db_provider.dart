@@ -91,4 +91,10 @@ class DbProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  bool isEnabled = true;
+  void updateButton() {
+    isEnabled = !isEnabled;
+    notifyListeners();
+  }
 }

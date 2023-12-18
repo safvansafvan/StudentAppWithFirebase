@@ -60,7 +60,10 @@ class AddStudentView extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 60, vertical: 20),
             child: ElevatedButton(
                 onPressed: () async {
-                  await handleAddStudent(context);
+                  dbProvider.isEnabled
+                      ? await handleAddStudent(context)
+                          .then((value) => dbProvider.isEnabled = true)
+                      : null;
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: commonClr,
@@ -86,6 +89,9 @@ class AddStudentView extends StatelessWidget {
 
   Future<void> handleAddStudent(context) async {
     final db = Provider.of<DbProvider>(context, listen: false);
+    final dbProvider = Provider.of<DbProvider>(context, listen: false);
+    dbProvider.updateButton();
+
     final name = db.nameCtrl.text.trim();
     final age = db.ageCtrl.text.trim();
     final rollNo = db.rollNumCtrl.text.trim();
