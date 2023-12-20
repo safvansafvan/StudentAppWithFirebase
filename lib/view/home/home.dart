@@ -50,7 +50,7 @@ class HomeView extends StatelessWidget {
             Navigator.pushNamed(context, 'addView');
           },
           label: Text(
-            ' Add Student',
+            ' Add Student ',
             style: TextStyle(color: kwhite),
           ),
         ),
