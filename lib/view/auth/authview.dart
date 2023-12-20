@@ -5,6 +5,7 @@ import 'package:studentappfirebase/controller/providers/internet_provider.dart';
 import 'package:studentappfirebase/view/auth/phone_auth/phone_auth_view.dart';
 import 'package:studentappfirebase/view/auth/widgets/sign_signup_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:studentappfirebase/view/home/home.dart';
 import 'package:studentappfirebase/view/widgets/msg_toast.dart';
 
 // ignore: must_be_immutable
@@ -98,7 +99,9 @@ class AuthView extends StatelessWidget {
     if (ip.hasInternet == false) {
       showMsgToast(msg: 'Enable Internet Connection');
     } else {
-      await authP.signInWithGoogle(context: context);
+      await authP.signInWithGoogle(context: context).then((value) =>
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const HomeView())));
     }
   }
 }
